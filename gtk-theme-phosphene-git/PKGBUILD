@@ -1,0 +1,30 @@
+# Maintainer: Drake Arconis <lightdrake@gmail.com>
+
+pkgname=gtk-theme-phosphene-git
+pkgver=16.5520af0
+pkgrel=1
+pkgdesc="A flat and light theme with a modern look that support Openbox, Xfce, Gnome, Unity and KDE"
+arch=('any')
+url="https://github.com/hdni/Phosphene"
+license=()
+makedepends=('git')
+source=('git+https://github.com/hdni/Phosphene.git')
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$_relpkgname"
+  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+}
+
+package() {
+  cd Phosphene
+
+  # create theme dir
+  install -d -m 755 "$pkgdir"/usr/share/themes/Phosphene
+
+  # clean up
+  rm -rf {.git,.gitignore,CREDITS,LICENSE,README}
+
+  # install theme
+  cp -r . "$pkgdir"/usr/share/themes/Phosphene/
+}

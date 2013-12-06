@@ -1,0 +1,30 @@
+# Maintainer: Drake Arconis <lightdrake@gmail.com>
+
+pkgname=gtk-theme-fleche-git
+pkgver=4.58f4129
+pkgrel=1
+pkgdesc="A flat and light theme with a modern look that support Openbox, Xfce, Gnome, Unity and KDE"
+arch=('any')
+url="https://github.com/hdni/Fleche"
+license=()
+makedepends=('git')
+source=('git+https://github.com/hdni/Fleche.git')
+md5sums=('SKIP')
+
+pkgver() {
+  cd "$_relpkgname"
+  echo $(git rev-list --count HEAD).$(git rev-parse --short HEAD)
+}
+
+package() {
+  cd Fleche
+
+  # create theme dir
+  install -d -m 755 "$pkgdir"/usr/share/themes/Fleche
+
+  # clean up
+  rm -rf {.git,.gitignore,CREDITS,LICENSE,README}
+
+  # install theme
+  cp -r . "$pkgdir"/usr/share/themes/Fleche/
+}
